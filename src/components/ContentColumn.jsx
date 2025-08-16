@@ -7,6 +7,7 @@ import ButtonMenu from "./ButtonMenu";
 import NumericAlgoritm from "../algorithms/NumericAlgorithm";
 import ReverseNumericAlgoritm from "../algorithms/ReverseNumeric";
 import MorseAlgorithm from "../algorithms/MorseAlgorithm";
+import { CaesarCypherAlgo } from "../algorithms/CaesarCypherAlgo";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -15,6 +16,7 @@ export default function ContentColumn({onInputChange}){
     const [inputText , setInputText] = useState("");
     const [encodingAlgo , setEncodingAlgorithm] = useState("")
     const [result , setResult] = useState("")
+    const [shift , setShift] = useState(2);
 
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -26,6 +28,11 @@ export default function ContentColumn({onInputChange}){
     const handleAlgorithmChange = (value) => {
         setEncodingAlgorithm(value)
         console.log("Algorithm set to: " + value)
+    }
+
+    const handleShiftChange = (value) => {
+        setShift(value)
+        console.log("Shift value set to: " + value)
     }
 
     const copyToClipboard = () => {
@@ -54,6 +61,8 @@ export default function ContentColumn({onInputChange}){
             case "morse":
                 setResult(MorseAlgorithm(inputText))
                 break;
+            case "caesar":
+                setResult(CaesarCypherAlgo(inputText , shift));
         }
     }
 
@@ -67,7 +76,7 @@ export default function ContentColumn({onInputChange}){
                 <TextBox onInputChange={handleInputChange}/>
                 <Text className="subtitle">Select the Encoding Algorithm:</Text>
                 <br></br>
-                <ButtonMenu onAlgorithmChange={handleAlgorithmChange}/>
+                <ButtonMenu onAlgorithmChange={handleAlgorithmChange} onShiftChange={handleShiftChange}/>
                 <Row className="submit-button-box" style={{width: '100%'}}>
                     <Button 
                         className="submit-button"

@@ -7,7 +7,7 @@ import {Row} from "antd";
 
 const { Title, Paragraph, Text } = Typography;
 
-export default function ButtonMenu({onAlgorithmChange}){
+export default function ButtonMenu({onAlgorithmChange , onShiftChange}){
 
     const [isMobile , setIsMobile] = useState(window.innerWidth < 765);
     const [algorithm , setAlgorithm] = useState("")
@@ -56,6 +56,7 @@ export default function ButtonMenu({onAlgorithmChange}){
                         min={1} max={28} defaultValue={2}
                         disabled={algorithm !== "caesar"}
                         controls={true}
+                        onChange={(value) => onShiftChange(value)}
                     ></InputNumber>
                 </Row>   
         </>

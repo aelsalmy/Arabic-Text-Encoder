@@ -12,5 +12,7 @@ export default function ReplaceSpecialChar(inputStr){
     inputStr = inputStr.replace(/لآ/g , 'لا')
     inputStr = inputStr.replace(/ڤ/g , 'ف')
 
-    return inputStr
+    inputStr = inputStr.replace(/\s+/g, " ");
+
+    return inputStr.trim(); // Remove leading and trailing spaces
 }
