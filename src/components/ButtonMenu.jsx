@@ -57,8 +57,7 @@ export default function ButtonMenu({onAlgorithmChange}){
                         disabled={algorithm !== "caesar"}
                         controls={true}
                     ></InputNumber>
-                </Row>
-                
+                </Row>   
         </>
     );
 }

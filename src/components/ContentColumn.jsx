@@ -4,6 +4,9 @@ import {Button, Typography , message} from "antd";
 import { Col , Radio , Row } from 'antd';
 import TextBox from "./TextBox";
 import ButtonMenu from "./ButtonMenu";
+import NumericAlgoritm from "../algorithms/NumericAlgorithm";
+import ReverseNumericAlgoritm from "../algorithms/ReverseNumeric";
+import MorseAlgorithm from "../algorithms/MorseAlgorithm";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -11,7 +14,7 @@ export default function ContentColumn({onInputChange}){
     
     const [inputText , setInputText] = useState("");
     const [encodingAlgo , setEncodingAlgorithm] = useState("")
-    const result = "This is a testing Text"
+    const [result , setResult] = useState("")
 
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -26,7 +29,8 @@ export default function ContentColumn({onInputChange}){
     }
 
     const copyToClipboard = () => {
-        navigator.clipboard.writeText(inputText)
+        const rtlText = result.split(" ").reverse().join(" ");
+        navigator.clipboard.writeText(rtlText)
         .then(() => {
             messageApi.open({
                 type: 'success',
@@ -37,6 +41,21 @@ export default function ContentColumn({onInputChange}){
             console.error("Failed to copy: ", err);
         });
     };
+
+    const onSubmit = () => {
+        console.log("Submitted")
+        switch (encodingAlgo){
+            case "numeric":
+                setResult(NumericAlgoritm(inputText))
+                break;
+            case "reverse":
+                setResult(ReverseNumericAlgoritm(inputText))
+                break;
+            case "morse":
+                setResult(MorseAlgorithm(inputText))
+                break;
+        }
+    }
 
     return (
         <>
@@ -50,13 +69,16 @@ export default function ContentColumn({onInputChange}){
                 <br></br>
                 <ButtonMenu onAlgorithmChange={handleAlgorithmChange}/>
                 <Row className="submit-button-box" style={{width: '100%'}}>
-                    <Button className="submit-button">Encode</Button>
                     <Button 
                         className="submit-button"
+                        onClick={(event) => onSubmit()}
+                    >Encode</Button>
+                    {/*<Button 
+                        className="submit-button"
                         onClick={(event) => copyToClipboard()}
-                    >Copy to Clipboard</Button>
+                    >Copy to Clipboard</Button>*/}
                 </Row>
-                <TextBox disabled={true} resultText={inputText}/>
+                <TextBox disabled={true} resultText={result}/>
             </Col>
         </>
     );
